@@ -23,9 +23,13 @@ public class WhiskyController {
 
     @GetMapping(value = "/whiskies")
     public ResponseEntity<List<Whisky>> findWhiskysFilteredByYear(
-            @RequestParam(name = "year", required = false) Integer year) {
+            @RequestParam(name = "year", required = false) Integer year,
+            @RequestParam(name = "region", required = false) String region) {
         if (year != null){
             return new ResponseEntity<>(whiskyRepository.findWhiskyByYear(year), HttpStatus.OK);
+        }
+        if (region != null){
+            return new ResponseEntity<>(whiskyRepository.findWhiskyByDistilleryRegion(region), HttpStatus.OK);
         }
         return new ResponseEntity<>(whiskyRepository.findAll(), HttpStatus.OK);
     }
